@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name = "Mecanum Forward 1 ft", group = "Auto")
-public class test1 extends LinearOpMode {
+public class MecanumAutoTest extends LinearOpMode {
 
     DcMotor leftFront, leftBack, rightFront, rightBack;
     ElapsedTime runtime = new ElapsedTime();
