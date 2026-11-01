@@ -27,9 +27,9 @@ public class MecanumAutoTest extends LinearOpMode {
     public void runOpMode() {
 
         leftFront  = hardwareMap.get(DcMotor.class, "frontLeftDrive");
-        leftBack   = hardwareMap.get(DcMotor.class, "frontRightDrive");
-        rightFront = hardwareMap.get(DcMotor.class, "backRightDrive");
-        rightBack  = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        leftBack   = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        rightFront = hardwareMap.get(DcMotor.class, "frontRightDrive"); 
+        rightBack  = hardwareMap.get(DcMotor.class, "backRightDrive");
 
         // Typical goBILDA mecanum: left side reversed. Verify with the wheel test below.
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
