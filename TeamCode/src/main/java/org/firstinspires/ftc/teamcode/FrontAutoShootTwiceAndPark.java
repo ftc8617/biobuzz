@@ -19,12 +19,33 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
     public void runOpMode() {
         robot.init(hardwareMap);
 
+        int delaySeconds = 10;
+        boolean parkOffset = false;
+        boolean lastDpadUp = false;
+        boolean lastDpadDown = false;
+
+        boolean lastSquareButtonUp = false;
+        
+        // Loop during INIT so drivers can adjust parking before pressing play
+        while (!isStarted() && !isStopRequested()) {
+            boolean currentSquareButtonUp = gamepad1.square || gamepad2.square;
+
+            if (currentSquareButtonUp && !lastSquareButtonUp) {
+                parkOffset = !parkOffset;
+            }
+            
+            lastSquareButtonUp = currentSquareButtonUp;
+
+            telemetry.addLine("Odometry Auto Ready.");
+            telemetry.addLine("Use square to adjust parking.");
+            telemetry.update();
+        }
+
         telemetry.addLine("Odometry Auto Ready.");
         telemetry.update();
 
-        waitForStart();
         if (isStopRequested()) return;
-
+        
         robot.odo.resetPosAndIMU();
         sleep(100);
 
@@ -104,7 +125,9 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
         driveTo(-104.3, 5.5, 180, 0.6);
         telemetry.addLine("Auto Finished!");
         telemetry.update();
-        holdPosition(-108.5, -46.6, 180, 0.4, 100);
+        holdPosition(-108.5, -46.6 - (parkOffset ? 18 : 0), 180, 0.4, 100);
+        //If this doesn't work replace + with -
+        // Test before using.
         // Done
     }
 
