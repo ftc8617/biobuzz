@@ -20,13 +20,18 @@ public class BackAutoShootTwiceAndPark extends LinearOpMode {
         robot.init(hardwareMap);
 
         int delaySeconds = 10;
+        boolean parkOffset = false;
         boolean lastDpadUp = false;
         boolean lastDpadDown = false;
 
+        boolean lastSquareButtonUp = false;
+        
         // Loop during INIT so drivers can adjust the delay before pressing Play
         while (!isStarted() && !isStopRequested()) {
             boolean currentDpadUp = gamepad1.dpad_up || gamepad2.dpad_up;
             boolean currentDpadDown = gamepad1.dpad_down || gamepad2.dpad_down;
+
+            boolean currentSquareButtonUp = gamepad1.square || gamepad2.square;
 
             if (currentDpadUp && !lastDpadUp) {
                 delaySeconds++;
@@ -34,9 +39,13 @@ public class BackAutoShootTwiceAndPark extends LinearOpMode {
             if (currentDpadDown && !lastDpadDown) {
                 delaySeconds = Math.max(0, delaySeconds - 1); // Prevents negative delay
             }
+            if (currentSquareButtonUp && !lastSquareButtonUp) {
+                parkOffset = !parkOffset;
+            }
 
             lastDpadUp = currentDpadUp;
             lastDpadDown = currentDpadDown;
+            lastSquareButtonUp = currentSquareButtonUp;
 
             telemetry.addLine("Odometry Auto Ready.");
             telemetry.addLine("Use D-Pad UP / DOWN to adjust start delay.");
@@ -80,7 +89,7 @@ public class BackAutoShootTwiceAndPark extends LinearOpMode {
         setGateFlat();
         setSwaying(false);
 
-        // Get in front of flower
+      // Get in front of flower
         driveTo(-16.7, 0, 0, .3);
         setRampOut();
         driveTo(-16.7, 13.1, 0, .3);
@@ -111,8 +120,9 @@ public class BackAutoShootTwiceAndPark extends LinearOpMode {
         setGateFlat();
         runIntake(0);
         driveTo(-10.7, -0.1, 0, .3);
-        driveTo(-9.3, 50.8, 0, .3);
-        holdPosition(-9.3, 50.8, 0.0, 0.4, 300000);
+        driveTo(-9.3, 50.8 - (parkOffset ? 18 : 0), 0, .3);
+        holdPosition(-9.3, 50.8 - (parkOffset ? 18 : 0), 0.0, 0.4, 300000); 
+        // switch the - to + if this doesn't work. Test before using.
     }
 
     // =========================================================================
@@ -210,6 +220,7 @@ public class BackAutoShootTwiceAndPark extends LinearOpMode {
         telemetry.addData("Forward (X)", "Target: %.1f in | Actual: %.1f in", targetXInches, currentX / 25.4);
         telemetry.addData("Left    (Y)", "Target: %.1f in | Actual: %.1f in", targetYInches, currentY / 25.4);
         telemetry.addData("Angle (Turn)", "Target: %.1f°  | Actual: %.1f°", targetHeadingDeg, currentHeadingDeg);
+        telemetry.addData("PARK: ", (parkOffset ? "RIGHT" : "LEFT"); // driver relative
         telemetry.addLine("==============================");
         telemetry.update();
 
