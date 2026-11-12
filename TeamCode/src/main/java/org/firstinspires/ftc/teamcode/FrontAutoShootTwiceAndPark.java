@@ -19,10 +19,7 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
     public void runOpMode() {
         robot.init(hardwareMap);
 
-        int delaySeconds = 10;
         boolean parkOffset = false;
-        boolean lastDpadUp = false;
-        boolean lastDpadDown = false;
 
         boolean lastSquareButtonUp = false;
         
@@ -37,7 +34,7 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
             lastSquareButtonUp = currentSquareButtonUp;
 
             telemetry.addLine("Odometry Auto Ready.");
-            telemetry.addLine("Use square to adjust parking.");
+            telemetry.addLine("Use square to adjust parking offset.");
             telemetry.update();
         }
 
@@ -126,7 +123,7 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
         telemetry.addLine("Auto Finished!");
         telemetry.update();
         holdPosition(-108.5, -46.6 - (parkOffset ? 18 : 0), 180, 0.4, 100);
-        //If this doesn't work replace + with -
+        // If this doesn't work replace + with -
         // Test before using.
         // Done
     }
@@ -235,6 +232,7 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
         telemetry.addData("Forward (X)", "Target: %.1f in | Actual: %.1f in", targetXInches, currentX / 25.4);
         telemetry.addData("Left    (Y)", "Target: %.1f in | Actual: %.1f in", targetYInches, currentY / 25.4);
         telemetry.addData("Angle (Turn)", "Target: %.1f°  | Actual: %.1f°", targetHeadingDeg, currentHeadingDeg);
+        telemetry.addData("Park offset: ", parkOffset ? "LEFT" : "RIGHT");
         telemetry.addLine("==============================");
         telemetry.update();
 
