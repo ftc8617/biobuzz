@@ -1,4 +1,5 @@
 // auto from https://github.com/Jibthebear/POL-BIOBUZZ-/
+// use this when you start able to shoot
 
 package org.firstinspires.ftc.teamcode;
 
@@ -9,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Autonomous(name = "Solo shoot twice and park", group = "Autonomous")
-public class FrontRedAutoAICodeTooManyCommentsAndStuffHardwareMadeThisBTW extends LinearOpMode {
+public class FrontAutoShootTwiceAndPark extends LinearOpMode {
 
     private final RobotHardware robot = new RobotHardware();
     private boolean isAutoSwaying = false;
