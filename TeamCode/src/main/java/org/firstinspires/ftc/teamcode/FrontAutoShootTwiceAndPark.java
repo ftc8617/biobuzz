@@ -232,7 +232,7 @@ public class FrontAutoShootTwiceAndPark extends LinearOpMode {
         telemetry.addData("Forward (X)", "Target: %.1f in | Actual: %.1f in", targetXInches, currentX / 25.4);
         telemetry.addData("Left    (Y)", "Target: %.1f in | Actual: %.1f in", targetYInches, currentY / 25.4);
         telemetry.addData("Angle (Turn)", "Target: %.1f°  | Actual: %.1f°", targetHeadingDeg, currentHeadingDeg);
-        telemetry.addData("Park offset: ", parkOffset ? "LEFT" : "RIGHT");
+        telemetry.addData("Park offset: ", parkOffset ? "LEFT" : "RIGHT"); // driver relative
         telemetry.addLine("==============================");
         telemetry.update();
 
